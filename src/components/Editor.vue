@@ -1,20 +1,20 @@
 <template>
   <div class="ui form">
     <div class="field">
-      <textarea rows="5" placeholder="写点东西..."></textarea>
+      <textarea rows="5" placeholder="写点东西..." v-model="entity.body" v-on:input="update(entity)"></textarea>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-  name: "Editor",
-  data() {
-    return {};
-  }
+  methods: {
+    ...mapActions(["update"])
+  },
+  props: ["entity"]
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="css">
 </style>

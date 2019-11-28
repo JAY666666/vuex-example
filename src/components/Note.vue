@@ -1,31 +1,46 @@
-<template>
+<template lang="html">
   <div class="item">
-    <div class="meta">{{ 111 }}</div>
+    <div class="meta">
+      {{ updated(entity) }}
+    </div>
     <div class="content">
-      <div class="header">{{ 111 || '新建笔记' }}</div>
+      <div class="header" v-on:click="open = !open">
+        {{ header(entity) || '新建笔记' }}
+      </div>
       <div class="extra">
-        <editor></editor>
-        {{ 111 }} 字
-        <i class="right floated trash outline icon"></i>
+        <editor v-bind:entity="entity" v-if="open">
+        </editor>
+        {{ words(entity) }} 字
+        <i class="right floated trash outline icon"
+          v-on:click="destroy(entity)"
+          v-if="open">
+        </i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import editor from "./Editor";
-
+import Editor from "./Editor";
+import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "Note",
-  components: {
-    editor
+  computed: {
+    ...mapGetters(["updated", "words", "header"])
   },
   data() {
-    return {};
+    return {
+      open: false
+    };
+  },
+  props: ["entity"],
+  methods: {
+    ...mapActions(["destroy"])
+  },
+  components: {
+    Editor
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="css">
 </style>
